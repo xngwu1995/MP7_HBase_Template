@@ -48,7 +48,7 @@ RUN adduser hadoopuser --disabled-password --gecos ""
 RUN echo 'hadoopuser:hadooppass' | chpasswd
 
 # Download and setup HBase
-RUN curl -s "http://apache.cs.utah.edu/hbase/1.4.2/hbase-1.4.2-bin.tar.gz" | tar -xz -C /usr/local/
+RUN curl -s "http://archive.apache.org/dist/hbase/1.4.2/hbase-1.4.2-bin.tar.gz" | tar -xz -C /usr/local/
 RUN cd /usr/local && ln -s ./hbase-1.4.2 hbase
 #COPY hbase-1.4.2-bin.tar.gz /usr/local/
 #RUN cd /usr/local/ && tar xzf hbase-1.4.2-bin.tar.gz && ln -s ./hbase-1.4.2 hbase
