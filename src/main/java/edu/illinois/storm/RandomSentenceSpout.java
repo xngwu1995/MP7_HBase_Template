@@ -1,0 +1,47 @@
+package edu.illinois.storm;
+
+import java.util.Map;
+import java.util.Random;
+import org.apache.storm.spout.SpoutOutputCollector;
+import org.apache.storm.task.TopologyContext;
+import org.apache.storm.topology.OutputFieldsDeclarer;
+import org.apache.storm.topology.base.BaseRichSpout;
+import org.apache.storm.tuple.Fields;
+import org.apache.storm.tuple.Values;
+import org.apache.storm.utils.Utils;
+
+/** a spout that randomly generate sentence from a set of sentences */
+public class RandomSentenceSpout extends BaseRichSpout {
+  SpoutOutputCollector _collector;
+  Random _rand;
+
+  public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
+    _collector = collector;
+    _rand = new Random();
+  }
+
+  public void nextTuple() {
+    String[] sentences =
+        new String[] {
+          "the cow jumped over the moon",
+          "an apple a day keeps the doctor away",
+          "four score and seven years ago",
+          "snow white and the seven dwarfs",
+          "i am at two with nature"
+        };
+
+    /* ----------------------TODO-----------------------
+    Task: randomly generate sentence from sentences string array
+    ------------------------------------------------- */
+
+		// End
+  }
+
+  public void declareOutputFields(OutputFieldsDeclarer declarer) {
+    /* ----------------------TODO-----------------------
+    Task: declare output fields
+    ------------------------------------------------- */
+
+		// End
+  }
+}
