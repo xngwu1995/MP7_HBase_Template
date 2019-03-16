@@ -21,7 +21,7 @@
 name: "part-D"
 
 # TODO
-# Task: implement your topology for part c
+# Task: implement your topology for part d
 
 # topology configuration
 # this will be passed to the submitter as a map of config options
@@ -44,7 +44,7 @@ components:
   # TODO
   # Task: implement the redis store mapper
   # src/main/java/edu/illinois/storm/TopNStoreMapper.java
-  # redis hash key for part b is "partDTopN"
+  # redis hash key for part d is "partDTopN"
 
 # spout definitions
 spouts:

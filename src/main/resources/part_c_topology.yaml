@@ -54,3 +54,4 @@ bolts:
 # stream definitions
 # stream definitions define connections between spouts and bolts.
 streams:
+  # Hint: add new normalize bolt into the topology

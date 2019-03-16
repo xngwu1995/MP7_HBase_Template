@@ -74,4 +74,3 @@ streams:
 
   # TODO
   # Task: pipe output of word count bolt to redis store bolt
-  # Hint: choose the right grouping type to make problem easier
