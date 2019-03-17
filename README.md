@@ -194,7 +194,7 @@ You don't need to worry about the sequence.
 The result should contain and only contain the top N words.
 For example, if 3-top words are "blue", "red" and "green", "blue, red, green", "red, blue, green" are all correct answer.
 
-To save the output to Redis, you should save field-value pairs ("top-N", {top N words string}") in hashes `partDTopN`.
+To save the output to Redis, you should save field-value pairs `("top-N", {top N words string})` in hashes `partDTopN`.
 It's not the best way to save a set in Redis, but Redis is not the key point for this assignment.
 So we decided to make it easier for you to implement by keeping using hashes in part d.
 We've provided you the template in `src/main/java/edu/illinois/storm/TopNStoreMapper.java`.
