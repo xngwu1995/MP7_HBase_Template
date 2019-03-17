@@ -200,7 +200,7 @@ So we decided to make it easier for you to implement by keeping using hashes in 
 We've provided you the template in `src/main/java/edu/illinois/storm/TopNStoreMapper.java`.
 To make it clear, in the auto-grader, we retrieve your answer from Redis by executing script equivalent to:
 
-    HGET partDTopN top-N
+    redis-cli -a uiuc_cs498_mp4 HGET partDTopN top-N
     # the output for example above should be:
     # "blue, red, green"
 

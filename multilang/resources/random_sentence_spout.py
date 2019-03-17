@@ -1,5 +1,6 @@
 import storm
 import random
+import time
 
 # Define some sentences
 SENTENCES = """
@@ -20,6 +21,7 @@ class SentenceSpout(storm.Spout):
 
     # Process the next tuple
     def nextTuple(self):
+        time.sleep(0.2)
         # TODO
         # Task: randomly generate sentence from sentences string array
         pass
