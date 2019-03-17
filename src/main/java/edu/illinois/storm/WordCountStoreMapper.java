@@ -24,7 +24,7 @@ public class WordCountStoreMapper implements RedisStoreMapper {
     /* ----------------------TODO-----------------------
     Task: define which part of the tuple as the key
     ------------------------------------------------- */
-
+		return "";
 		// End
   }
 
@@ -33,7 +33,7 @@ public class WordCountStoreMapper implements RedisStoreMapper {
     /* ----------------------TODO-----------------------
     Task: define which part of the tuple as the value
     ------------------------------------------------- */
-
+		return "";
 		// End
   }
 }

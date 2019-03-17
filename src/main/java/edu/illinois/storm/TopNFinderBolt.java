@@ -29,6 +29,7 @@ public class TopNFinderBolt extends BaseRichBolt {
     ------------------------------------------------- */
 
 		// End
+		return this;
   }
 
   @Override

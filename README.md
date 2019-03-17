@@ -2,7 +2,9 @@
 
 ## 1. Overview
 
-Welcome to the Storm machine practice. The final goal of this assignment is to build a topology that finds the top N words in one of Shakespeare’s articles. We will build the assignment step by step on top of the topology in the tutorial.
+Welcome to the Storm machine practice.
+The final goal of this assignment is to build a topology that finds the top N words in a given corpus.
+We will build the assignment step by step on top of the topology in the tutorial.
 
 ## 2. General Requirements
 
@@ -12,7 +14,9 @@ All these assignments are designed to work on the **Docker image** that we provi
 
 ## Overview and Requirements
 
-This assignment is going to build on **Tutorial 4: Introduction to Storm (Java)**. It is highly recommended that you practice that tutorial before starting this assignment. This assignment will be graded based on **JDK 8**
+This assignment is going to build on **Tutorial 4: Introduction to Storm (Java)**.
+It is highly recommended that you practice that tutorial before starting this assignment.
+We are going to use `Storm V1.2.2`, `Redis 5.0.3` and `Open JDK 8`.
 
 ## Set up the environment
 
@@ -24,236 +28,187 @@ This assignment is going to build on **Tutorial 4: Introduction to Storm (Java)*
 
 **Step 2**: Download the Dockerfile and related files for this MP, change the current folder, build, and run the docker image, run:
 
-    git clone https://github.com/UIUC-public/Docker_MP4_java.git
-    cd Docker_MP4_java
-    docker build -t docker_mp4_java .
-    docker run -it docker_mp4_java bin/bash
+    git clone https://github.com/UIUC-CS498-Cloud/MP4_docker
+    cd MP4_docker
+    docker build -t mp4_docker .
 
 ## Procedures
 
 **Step 3**: Download the Java templates and change the current folder, run:
 
-    git clone https://github.com/UIUC-public/MP4_java.git
-    cd MP4_java
+    git clone https://github.com/UIUC-CS498-Cloud/MP4_java_template MP4
+    cd MP4
+    docker run -it -v "$(pwd)":/mp4/solution mp4_docker /bin/bash
 
-**Step 4**: Finish the exercises by editing the provided template files. All you need to do is complete the parts marked with **TODO**.
+Now, the MP4 template folder has been mapped to `/mp4/solution` in the container.
 
-* Each exercise has a Java code template. All you need to do is edit this file.
-* Each exercise should be implemented in one file only. Multiple file implementation is not allowed.
+**Step 4**: Finish the exercises by editing the provided template files. You need to complete the parts marked with **TODO**.
+The template is just our suggestions about how to implement the application.
+You can modify the template at will as long as your solution can be compiled as ran by the command we provide in this instruction.
+Our auto-grade compiles and runs your submission in the same way.
 
-**Step 5**: After you are done with the assignment, submit the zip file containing all your output files (output-part-a.txt, output-part-b.txt. output-part-c.txt, output-part-d.txt). Further submission instructions will be found on the submission page.
+**Step 5**: After finishing the assignment, submit the zip file containing the `MP4` folder.
+The zip file structure should look like:
+
+    Archive:  MP4.zip
+      Length      Date    Time    Name
+    ---------  ---------- -----   ----
+            0  03-13-2019 17:18   MP4_java_solution/
+        75314  03-13-2019 17:18   MP4_java_solution/dump.rdb
+         4572  03-13-2019 17:18   MP4_java_solution/pom.xml
+           19  03-13-2019 17:18   MP4_java_solution/README.md
+         4415  03-13-2019 17:18   MP4_java_solution/dependency-reduced-pom.xml
+            0  03-13-2019 17:18   MP4_java_solution/src/
+            0  03-13-2019 17:18   MP4_java_solution/src/main/
+            0  03-13-2019 17:18   MP4_java_solution/src/main/resources/
+         2946  03-13-2019 17:18   MP4_java_solution/src/main/resources/part_d_topology.yaml
+         2698  03-13-2019 17:18   MP4_java_solution/src/main/resources/part_c_topology.yaml
+         2494  03-13-2019 17:18   MP4_java_solution/src/main/resources/part_b_topology.yaml
+         3215  03-13-2019 17:18   MP4_java_solution/src/main/resources/part_a_topology.yaml
+            0  03-13-2019 17:18   MP4_java_solution/src/main/java/
+            0  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/
+            0  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/
+            0  03-16-2019 21:31   MP4_java_solution/src/main/java/edu/illinois/storm/
+         1533  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/storm/RandomSentenceSpout.java
+         4198  03-16-2019 21:17   MP4_java_solution/src/main/java/edu/illinois/storm/TopNFinderBolt.java
+         1199  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/storm/TopNStoreMapper.java
+         1210  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/storm/WordCountStoreMapper.java
+         1255  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/storm/WordCountBolt.java
+         1718  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/storm/NormalizerBolt.java
+         1109  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/storm/SplitSentenceBolt.java
+         3021  03-16-2019 21:31   MP4_java_solution/src/main/java/edu/illinois/storm/FileReaderSpout.java
 
 # Exercise A: Simple Word Count Topology
 
-In this exercise, you are going to build a simple word counter that counts the words a random sentence spout generates. This first exercise is similar to **Tutorial 4: Introduction to Storm**.
+In this exercise, you are going to build a simple word counter that counts the words a random sentence spout generates.
+This first exercise is similar to **Tutorial 4: Introduction to Storm**.
 
-In this exercise, we are going to use the “RandomSentenceSpout” class as the spout, the “SplitSentenceBolt” class to split sentences into words, and “WordCountBolt” class to count the words. These components are exactly the same as in the tutorial. You can find the implementation of these classes in `MP4_java/src`.
+In this exercise, we are going to use the `RandomSentenceSpout` class as the spout, the `SplitSentenceBolt` class to split sentences into words, `WordCountBolt` class to count the words and RedisStoreBolt to save the output in Redis.
+The necessary knowledge has already been covered in the Tutorial.
 
-All you need to do for this exercise is to wire up these components. build the topology, and submit the topology, which is exactly the same as in the tutorial. To make things easier, we have provided a boilerplate for building the topology in the file: `src/TopWordFinderTopologyPartA`.
+For the splitter, we split the sentences at any characters other than numbers or letters (`[^a-zA-Z0-9]`).
 
-All you have to do is complete the parts marked as “TODO”. Note that this topology will run for 60 seconds and automatically gets killed after that.
+To save the output to redis, you should save field-value pairs ({word}, {count}) in hashes `partAWordCount`.
+We've provided you the template in `src/main/java/edu/illinois/storm/WordCountStoreMapper.java`.
+To make it clear, in the auto-grader, we retrieve your answer from Redis by executing script equivalent to:
 
-**NOTE**: When connecting the component in the topology (using builder.setSpout() and builder.setBolt() ), make sure to use the following names for each component. You might not get full credit if you don’t use these names accordingly:
+    # for example, we want to check your count for word "hello"
+    HGET partAWordCount hello
 
-| Component             | Name      |
-|:---------------------:|:---------:|
-| RandomSentenceSpout   | "spout"   |
-| SplitSentenceBolt     | "split"   |
-| WordCountBolt         | "count"   |
+You may find the hashes name for the other parts in their template topology yaml files we provide.
 
-After completing the implementation of this file, you have to build and run the application using the command below from the `MP4_java` directory:
+You need to implement all components and to wire up these components.
+To make the implementation easier, we have provided boilerplates.
+Keep in mind that the most important task for this part is to master how to set up a storm application.
 
+Note that, when auto-graded, this topology will run for 10 seconds and automatically gets killed after that.
+
+You can build and run the application using the command below inside the container:
+
+    # The template folder will be map to /mp4/solution in the container if you follow our instruction correctly
+    cd /mp4/solution
     mvn clean package
-    storm jar target/storm-example-0.0.1-SNAPSHOT.jar TopWordFinderTopologyPartA > output-part-a.txt
+    storm jar ./target/storm-example-0.0.1-SNAPSHOT.jar org.apache.storm.flux.Flux --local -R /part_a_topology.yaml -s 10000
 
-Here are **several parts** of a sample output of this application:
-
-    7179 [Thread-20-count-executor[2 2]] INFO  o.a.s.d.executor - Processing received message FOR 2 TUPLE: source: split:7, stream: default, id: {}, [cow]
-    7179 [Thread-20-count-executor[2 2]] INFO  o.a.s.d.task - Emitting: count default [cow, 1]
-    7179 [Thread-20-count-executor[2 2]] INFO  o.a.s.d.executor - BOLT ack TASK: 2 TIME: -1 TUPLE: source: split:7, stream: default, id: {}, [cow]
-    7179 [Thread-20-count-executor[2 2]] INFO  o.a.s.d.executor - Execute done TUPLE source: split:7, stream: default, id: {}, [cow] TASK: 2 DELTA: -1
-
-
-    7187 [Thread-30-spout-executor[9 9]] INFO  o.a.s.d.task - Emitting: spout default [the cow jumped over the moon]
-    7187 [Thread-30-spout-executor[9 9]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 6 tuple: source: spout:9, stream: default, id: {}, [the cow jumped over the moon]]
-
-
-    7189 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - Processing received message FOR 6 TUPLE: source: spout:9, stream: default, id: {}, [the cow jumped over the moon]
-    7189 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [the]
-    7189 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 3 tuple: source: split:6, stream: default, id: {}, [the]]
-    7189 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [cow]
-    7189 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 2 tuple: source: split:6, stream: default, id: {}, [cow]]
-    7189 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [jumped]
-    7189 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 2 tuple: source: split:6, stream: default, id: {}, [jumped]]
-    7190 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [over]
-    7190 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 3 tuple: source: split:6, stream: default, id: {}, [over]]
-    7190 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [the]
-    7190 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 3 tuple: source: split:6, stream: default, id: {}, [the]]
-    7190 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [moon]
-    7190 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 3 tuple: source: split:6, stream: default, id: {}, [moon]]
-
-This is just a sample. Data may not be accurate.
-
-Note that you can view the output of the program in the “output-part-a.txt” file. You will be graded based on the content of “output-part-a.txt” file.
+If your solution is right, you should see the corresponding result in Redis.
+We suggest you think about how you can debug your solution efficiently.
 
 # Exercise B: Input Data from a File
 
-As can be seen, the spout used in the topology of Exercise A is generating random sentences from a predefined set in the spout’s class. However, we want to count words from one of Shakespeare’s articles. Thus, in this exercise, you are going to create a new spout that reads data from an input file and emits each line as a tuple.
+As can be seen, the spout used in the topology of Exercise A is generating random sentences from a predefined set in the spout’s class.
+However, we want to count words for a given corpus.
+Thus, in this exercise, you are going to create a new spout that reads data from an input file and emits each line as a tuple.
+Remember to put a 1-second sleep after reading the whole file to avoid a busy loop.
 
-To make the implementation easier, we have provided a boilerplate for the spout needed in the following file: `src/FileReaderSpout.java`.
+To make the implementation easier, we have provided a boilerplate for the spout needed in the following file: `src/main/java/edu/illinois/storm/FileReaderSpout.java`.
 
 After finishing the implementation of `FileReaderSpout `class, you have to wire up the topology with this new spout.
 
-To make the implementation easier, we have provided a boilerplate for the topology needed in the following file: `src/TopWordFinderTopologyPartB.java`.
+To make the implementation easier, we have provided a boilerplate for the topology needed in the following file: `src/main/resources/part_b_topology.yaml`.
 
-Note that this topology will run for 2 minutes and automatically gets killed after that. There is a chance that you might not process all the data in the input file during this time. However, that is fine and incorporated in the grader.
+You need to implement all components and to wire up these components.
+To make the implementation easier, we have provided boilerplates.
 
-All you need to do is to make the necessary changes in above files by implementing the sections marked as “TODO”.
+Note that, when auto-graded, this topology will run for 10 seconds and automatically gets killed after that.
 
-**NOTE**: When connecting the component in the topology (using builder.setSpout() and builder.setBolt() ), make sure to use the following names for each component. You might not get full credit if you don’t use these names accordingly:
+**NOTE**: You probably want to set the number of executors of the spout to “1” so that you don’t read the input file more than once.
+However, you have the freedom to have a different implementation as long as the result is correct.
 
-| Component             | Name      |
-|:---------------------:|:---------:|
-| FiileReaderSpout      | "spout"   |
-| SplitSentenceBolt     | "split"   |
-| WordCountBolt         | "count"   |
+You can build and run the application using the command below inside the container:
 
-**NOTE**: You probably want to set the number of executors of the spout to “1” so that you don’t read the input file more than once. However, that depends on your implementation.
-
-We are going to test this application on a Shakespeare article, which is stored in the file “data.txt”. When you are done with the implementation, you should build and run the application again using the following command, from the `MP4_java` directory:
-
+    # The template folder will be map to /mp4/solution in the container if you follow our instruction correctly
+    cd /mp4/solution
     mvn clean package
-    storm jar target/storm-example-0.0.1-SNAPSHOT.jar TopWordFinderTopologyPartB data.txt > output-part-b.txt
+    storm jar ./target/storm-example-0.0.1-SNAPSHOT.jar org.apache.storm.flux.Flux --local -R /part_b_topology.yaml -s 10000
 
-Note that this command assumes you are giving the input file name as an input argument. If needed, you can change the command accordingly.
+Note that you'll need to set the path of the input file in `part_b_topology.yaml` and then put the input file in the right place.
+We've covered how to pass configuration to spout. You can think about how you can set the input file path in `part_b_topology.yaml`.
+We will put the input data at `/tmp/mp4_data.txt` in the auto-grader. You should modify your path accordingly before pack your solution.
 
-Here are **several parts** of a sample output of this application:
-
-    6973 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - Processing received message FOR 6 TUPLE: source: spout:8, stream: default, id: {}, [***The Project Gutenberg's Etext of Shakespeare's First Folio***]
-    6974 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default []
-    6975 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 3 tuple: source: split:6, stream: default, id: {}, []]
-    6975 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [The]
-    6975 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 4 tuple: source: split:6, stream: default, id: {}, [The]]
-    6975 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [Project]
-    6975 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 2 tuple: source: split:6, stream: default, id: {}, [Project]]
-    6975 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [Gutenberg]
-    6975 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 2 tuple: source: split:6, stream: default, id: {}, [Gutenberg]]
-    6976 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [s]
-    6976 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 4 tuple: source: split:6, stream: default, id: {}, [s]]
-    6976 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [Etext]
-    6976 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 3 tuple: source: split:6, stream: default, id: {}, [Etext]]
-    6976 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [of]
-    6976 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 3 tuple: source: split:6, stream: default, id: {}, [of]]
-    6976 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [Shakespeare]
-    6976 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 2 tuple: source: split:6, stream: default, id: {}, [Shakespeare]]
-    6976 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [s]
-    6977 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 4 tuple: source: split:6, stream: default, id: {}, [s]]
-    6977 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [First]
-    6977 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 4 tuple: source: split:6, stream: default, id: {}, [First]]
-    6977 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.task - Emitting: split default [Folio]
-    6977 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 4 tuple: source: split:6, stream: default, id: {}, [Folio]]
-    6977 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - BOLT ack TASK: 6 TIME: -1 TUPLE: source: spout:8, stream: default, id: {}, [***The Project Gutenberg's Etext of Shakespeare's First Folio***]
-    6977 [Thread-28-split-executor[6 6]] INFO  o.a.s.d.executor - Execute done TUPLE source: spout:8, stream: default, id: {}, [***The Project Gutenberg's Etext of Shakespeare's First Folio***] TASK: 6 DELTA: -1
-
-
-    6979 [Thread-18-spout-executor[8 8]] INFO  o.a.s.d.task - Emitting: spout default [Copyright laws are changing all over the world, be sure to check]
-    6979 [Thread-18-spout-executor[8 8]] INFO  o.a.s.d.executor - TRANSFERING tuple [dest: 5 tuple: source: spout:8, stream: default, id: {}, [Copyright laws are changing all over the world, be sure to check]]
-
-
-    7283 [Thread-24-count-executor[3 3]] INFO  o.a.s.d.executor - Processing received message FOR 3 TUPLE: source: split:6, stream: default, id: {}, [included]
-    7283 [Thread-24-count-executor[3 3]] INFO  o.a.s.d.task - Emitting: count default [included, 2]
-
-This is just a sample. Data may not be accurate.
-
-Note that you can view the output of the program in the “output-part-b.txt” file. You will be graded based on the content of `output-part-b.txt` file.
+If your solution is right, you should see the corresponding result in Redis.
+We suggest you think about how you can debug your solution efficiently and maybe develop some simple tools to help you build some tests.
 
 # Exercise C: Normalizer Bolt
 
 The application we developed in Exercise B counts the words “Apple” and “apple” as two different words. However, if we want to find the top N words, we have to count these words the same. Additionally, we don’t want to take common English words into consideration.
 
-Therefore, in this part we are going to normalize the words by adding a normalizer bolt that gets the words from the splitter, normalizes them, and then sends them to the counter bolt. The responsibility of the normalizer is to:
+Therefore, in this part, we are going to normalize the words by adding a normalizer bolt that gets the words from the splitter, normalizes them, and then sends them to the counter bolt. The responsibility of the normalizer is to:
 
 1. Make all input words lowercase.
 2. Remove common English words.
 
-To make the implementation easier, we have provided a boilerplate for the normalizer bolt in the following file: `src/NormalizerBolt.java`.
+To make the implementation easier, we have provided a boilerplate for the normalizer bolt in the following file: `src/main/java/edu/illinois/storm/NormalizerBolt.java`.
 
 There is a list of common words to filter in this class, so please make sure you use this exact list to in order to receive the maximum points for this part. After finishing the implementation of this class, you have to wire up the topology with this bolt added to the topology.
 
-To make the implementation easier, we have provided a boilerplate for the topology needed in the following file: `src/TopWordFinderTopologyPartC.java`.
+You need to implement all components and to wire up these components.
+To make the implementation easier, we have provided boilerplates.
 
-Note that this topology will run for 2 minutes and automatically gets killed after that. There is a chance that you might not process all the data in the input file during this time. However, that is fine and incorporated in the grader.
+Note that, when auto-graded, this topology will run for 10 seconds and automatically gets killed after that.
 
-All you need to do is to make the necessary changes in above files by implementing the sections marked as “TODO”.
+You can build and run the application using the command below inside the container:
 
-**NOTE**: When connecting the component in the topology (using builder.setSpout() and builder.setBolt() ), make sure to use the following names for each component. You might not get full credit if you don’t use these names accordingly:
-
-| Component         | Name        |
-|:-----------------:|:-----------:|
-| FiileReaderSpout  | "spout"     |
-| SplitSentenceBolt | "split"     |
-| NormalizerBolt    | "normalize" |
-| WordCountBolt     | "count"     |
-
-When you are done with the implementation, you should build and run the application again using the following command, from the `MP4_java` directory:
-
+    # The template folder will be map to /mp4/solution in the container if you follow our instruction correctly
+    cd /mp4/solution
     mvn clean package
-    storm jar target/storm-example-0.0.1-SNAPSHOT.jar TopWordFinderTopologyPartC data.txt > output-part-c.txt
+    storm jar ./target/storm-example-0.0.1-SNAPSHOT.jar org.apache.storm.flux.Flux --local -R /part_c_topology.yaml -s 10000
 
-Here is **a part** of a sample output of this application:
-
-    6949 [Thread-28-normalize-executor[6 6]] INFO  o.a.s.d.executor - Processing received message FOR 6 TUPLE: source: split:9, stream: default, id: {}, [Etext]
-    6950 [Thread-28-normalize-executor[6 6]] INFO  o.a.s.d.task - Emitting: normalize default [etext]
-
-Note that you can view the output of the program in the “output-part-c.txt” file. You will be graded based on the content of “output-part-c.txt” file.
+If your solution is right, you should see the corresponding result in Redis.
+We suggest you think about how you can debug your solution efficiently and maybe develop some simple tools to help you build some tests.
 
 # Exercise D: Top N Words
 
-In this exercise, we are going to find the top N words. To complete this part, we have to build a topology that reads from an input file, splits it into words, normalizes the words, and counts the number of occurrences of each word. In this exercise, we are going to use the output of the count bolt to keep track of and periodically report the top N words.
+In this exercise, we are going to add a new bolt which uses the output of the count bolt to keep track of and report the top N words.
+Upon receipt of a new count from the count bolt, it updates the top N words and emits top N words set anytime it changes.
 
-For this purpose, you have to implement a bolt that keeps count of the top N words. Upon receipt of a new count from the count bolt, it updates the top N words. Then, it reports the top N words periodically. To make the implementation easier, we have provided a boilerplate for the top-N finder bolt in the following file: `TopNFinderBolt.java`.
+To output the top N words set, you should use ", " connect all top words.
+You don't need to worry about the sequence.
+The result should contain and only contain the top N words.
+For example, if 3-top words are "blue", "red" and "green", "blue, red, green", "red, blue, green" are all correct answer.
+
+To save the output to Redis, you should save field-value pairs ("top-N", {top N words string}") in hashes `partDTopN`.
+It's not the best way to save a set in Redis, but Redis is not the key point for this assignment.
+So we decided to make it easier for you to implement by keeping using hashes in part d.
+We've provided you the template in `src/main/java/edu/illinois/storm/TopNStoreMapper.java`.
+To make it clear, in the auto-grader, we retrieve your answer from Redis by executing script equivalent to:
+
+    HGET partDTopN top-N
+    # the output for example above should be:
+    # "blue, red, green"
 
 After finishing the implementation of this class, you have to wire up the topology with this bolt added to the topology.
 
-To make the implementation easier, we have provided a boilerplate for the topology needed in the following file: `src/TopWordFinderTopologyPartD.java`.
+You need to implement all components and to wire up these components.
+To make the implementation easier, we have provided boilerplates.
 
-Note that this topology will run for 2 minutes and automatically gets killed after that. There is a chance that you might not process all the data in the input file during this time. However, that is fine and incorporated in the grader.
+Note that, when auto-graded, this topology will run for 10 seconds and automatically gets killed after that.
 
-All you need to do is to make the necessary changes in above files by implementing the sections marked as “TODO”.
+You can build and run the application using the command below inside the container:
 
-**NOTE**: When connecting the component in the topology (using builder.setSpout() and builder.setBolt() ), make sure to use the following names for each component. You might not get full credit if you don’t use these names accordingly:
-
-| Component         | Name        |
-|:-----------------:|:-----------:|
-| FiileReaderSpout  | "spout"     |
-| SplitSentenceBolt | "split"     |
-| NormalizerBolt    | "normalize" |
-| WordCountBolt     | "count"     |
-| TopNFinderBolt    | "top-n"     |
-
-When you are done with the implementation, you should build and run the application again using the following command, from the `MP4_java` directory:
-
+    # The template folder will be map to /mp4/solution in the container if you follow our instruction correctly
+    cd /mp4/solution
     mvn clean package
-    storm jar target/storm-example-0.0.1-SNAPSHOT.jar TopWordFinderTopologyPartD data.txt > output-part-d.txt
+    storm jar ./target/storm-example-0.0.1-SNAPSHOT.jar org.apache.storm.flux.Flux --local -R /part_d_topology.yaml -s 10000
 
-Here is a **part of** a sample output of this application:
-
-    7760 [Thread-20-top-n-executor[12 12]] INFO  o.a.s.d.executor - Processing received message FOR 12 TUPLE: source: count:4, stream: default, id: {}, [plays, 1]
-    7760 [Thread-20-top-n-executor[12 12]] INFO  o.a.s.d.task - Emitting: top-n default [top-words = [ (plays , 1) , (etext , 1) , (shakespeare , 1) , (macbeth , 1) , (folio , 1) , (project , 1) , (index , 1) , (edition , 1) , (gutenberg , 1) , (first , 1) ]]
-
-Note that you can view the output of the program in the “output-part-d.txt” file. You will be graded based on the content of “output-part-d.txt” file.
-
-# part_b_topologc
-
-* redis hash key is "partBWordCount"
-
-## part_c_topology
-
-* redis hash key is "partCWordCount"
-
-## part_d_topology
-
-* redis hash key is "partDTopN"
-
-## File read spout
-Sleep 1s in nextTuple after reading the whole file
+If your solution is right, you should see the corresponding result in Redis.
+We suggest you think about how you can debug your solution efficiently and maybe develop some simple tools to help you build some tests.

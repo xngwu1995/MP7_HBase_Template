@@ -15,7 +15,7 @@ import org.apache.storm.tuple.Values;
 /** a spout that generate sentences from a file */
 public class FileReaderSpout implements IRichSpout {
   private SpoutOutputCollector _collector;
-  private TopologyContext context;
+  private TopologyContext _context;
   private String inputFile;
 
   // Hint: Add necessary instance variables if needed
@@ -33,7 +33,7 @@ public class FileReaderSpout implements IRichSpout {
 
   }
 
-	// Set input file path
+  // Set input file path
   public FileReaderSpout withInputFileProperties(String inputFile) {
     this.inputFile = inputFile;
     return this;
@@ -47,8 +47,7 @@ public class FileReaderSpout implements IRichSpout {
     1. read the next line and emit a tuple for it
     2. don't forget to add a small sleep when the file is entirely read to prevent a busy-loop
     ------------------------------------------------- */
-
-		// END
+    // END
   }
 
   @Override
@@ -68,5 +67,20 @@ public class FileReaderSpout implements IRichSpout {
 
     // END
 
+  }
+
+  public void fail(Object msgId) {}
+
+  public void ack(Object msgId) {}
+
+  @Override
+  public void activate() {}
+
+  @Override
+  public void deactivate() {}
+
+  @Override
+  public Map<String, Object> getComponentConfiguration() {
+    return null;
   }
 }
