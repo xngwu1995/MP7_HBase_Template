@@ -53,30 +53,30 @@ The zip file structure should look like:
     Archive:  MP4.zip
       Length      Date    Time    Name
     ---------  ---------- -----   ----
-            0  03-13-2019 17:18   MP4_java_solution/
-        75314  03-13-2019 17:18   MP4_java_solution/dump.rdb
-         4572  03-13-2019 17:18   MP4_java_solution/pom.xml
-           19  03-13-2019 17:18   MP4_java_solution/README.md
-         4415  03-13-2019 17:18   MP4_java_solution/dependency-reduced-pom.xml
-            0  03-13-2019 17:18   MP4_java_solution/src/
-            0  03-13-2019 17:18   MP4_java_solution/src/main/
-            0  03-13-2019 17:18   MP4_java_solution/src/main/resources/
-         2946  03-13-2019 17:18   MP4_java_solution/src/main/resources/part_d_topology.yaml
-         2698  03-13-2019 17:18   MP4_java_solution/src/main/resources/part_c_topology.yaml
-         2494  03-13-2019 17:18   MP4_java_solution/src/main/resources/part_b_topology.yaml
-         3215  03-13-2019 17:18   MP4_java_solution/src/main/resources/part_a_topology.yaml
-            0  03-13-2019 17:18   MP4_java_solution/src/main/java/
-            0  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/
-            0  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/
-            0  03-16-2019 21:31   MP4_java_solution/src/main/java/edu/illinois/storm/
-         1533  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/storm/RandomSentenceSpout.java
-         4198  03-16-2019 21:17   MP4_java_solution/src/main/java/edu/illinois/storm/TopNFinderBolt.java
-         1199  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/storm/TopNStoreMapper.java
-         1210  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/storm/WordCountStoreMapper.java
-         1255  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/storm/WordCountBolt.java
-         1718  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/storm/NormalizerBolt.java
-         1109  03-13-2019 17:18   MP4_java_solution/src/main/java/edu/illinois/storm/SplitSentenceBolt.java
-         3021  03-16-2019 21:31   MP4_java_solution/src/main/java/edu/illinois/storm/FileReaderSpout.java
+            0  03-13-2019 17:18   MP4/
+        75314  03-13-2019 17:18   MP4/dump.rdb
+         4572  03-13-2019 17:18   MP4/pom.xml
+           19  03-13-2019 17:18   MP4/README.md
+         4415  03-13-2019 17:18   MP4/dependency-reduced-pom.xml
+            0  03-13-2019 17:18   MP4/src/
+            0  03-13-2019 17:18   MP4/src/main/
+            0  03-13-2019 17:18   MP4/src/main/resources/
+         2946  03-13-2019 17:18   MP4/src/main/resources/part_d_topology.yaml
+         2698  03-13-2019 17:18   MP4/src/main/resources/part_c_topology.yaml
+         2494  03-13-2019 17:18   MP4/src/main/resources/part_b_topology.yaml
+         3215  03-13-2019 17:18   MP4/src/main/resources/part_a_topology.yaml
+            0  03-13-2019 17:18   MP4/src/main/java/
+            0  03-13-2019 17:18   MP4/src/main/java/edu/
+            0  03-13-2019 17:18   MP4/src/main/java/edu/illinois/
+            0  03-16-2019 21:31   MP4/src/main/java/edu/illinois/storm/
+         1533  03-13-2019 17:18   MP4/src/main/java/edu/illinois/storm/RandomSentenceSpout.java
+         4198  03-16-2019 21:17   MP4/src/main/java/edu/illinois/storm/TopNFinderBolt.java
+         1199  03-13-2019 17:18   MP4/src/main/java/edu/illinois/storm/TopNStoreMapper.java
+         1210  03-13-2019 17:18   MP4/src/main/java/edu/illinois/storm/WordCountStoreMapper.java
+         1255  03-13-2019 17:18   MP4/src/main/java/edu/illinois/storm/WordCountBolt.java
+         1718  03-13-2019 17:18   MP4/src/main/java/edu/illinois/storm/NormalizerBolt.java
+         1109  03-13-2019 17:18   MP4/src/main/java/edu/illinois/storm/SplitSentenceBolt.java
+         3021  03-16-2019 21:31   MP4/src/main/java/edu/illinois/storm/FileReaderSpout.java
 
 # Exercise A: Simple Word Count Topology
 

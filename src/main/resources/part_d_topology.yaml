@@ -30,6 +30,8 @@ config:
     topology.max.task.parallelism: 3
     # set this to true if you want to see more debug log
     topology.debug: false
+    # Hint: you can set input file path here
+    # make sure it's "/tmp/data.txt" in your final submission
 
 components:
   - id: "poolConfig"
@@ -54,6 +56,7 @@ bolts:
   # Hint: the new top N tracking bolt you need implement in this part is
   # src/main/java/edu/illinois/storm/TopNFinderBolt.java
   # You need to pass N to the bolt here
+  # make sure it's 10 in your final submission
 
 
 # stream definitions
