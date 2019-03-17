@@ -14,14 +14,12 @@ import org.apache.storm.utils.Utils;
 public class RandomSentenceSpout extends BaseRichSpout {
   SpoutOutputCollector _collector;
   Random _rand;
+  String[] sentences;
 
   public void open(Map conf, TopologyContext context, SpoutOutputCollector collector) {
     _collector = collector;
     _rand = new Random();
-  }
-
-  public void nextTuple() {
-    String[] sentences =
+    sentences =
         new String[] {
           "the cow jumped over the moon",
           "an apple a day keeps the doctor away",
@@ -29,7 +27,10 @@ public class RandomSentenceSpout extends BaseRichSpout {
           "snow white and the seven dwarfs",
           "i am at two with nature"
         };
+  }
 
+  public void nextTuple() {
+    Utils.sleep(200);
     /* ----------------------TODO-----------------------
     Task: randomly generate sentence from sentences string array
     ------------------------------------------------- */

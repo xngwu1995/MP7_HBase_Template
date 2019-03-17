@@ -92,8 +92,8 @@ To save the output to redis, you should save field-value pairs `({word}, {count}
 We've provided you the template in `src/main/java/edu/illinois/storm/WordCountStoreMapper.java`.
 To make it clear, in the auto-grader, we retrieve your answer from Redis by executing script equivalent to:
 
-    # for example, we want to check your count for word "hello"
-    HGET partAWordCount hello
+    # for example, we want to check your count for word "apple"
+    redis-cli -a uiuc_cs498_mp4 HGET partAWordCount apple
 
 You may find the hashes name for the other parts in their template topology yaml files we provide.
 
@@ -196,7 +196,7 @@ So we decided to make it easier for you to implement by keeping using hashes in 
 We've provided you the template in `src/main/java/edu/illinois/storm/TopNStoreMapper.java`.
 To make it clear, in the auto-grader, we retrieve your answer from Redis by executing script equivalent to:
 
-    HGET partDTopN top-N
+    redis-cli -a uiuc_cs498_mp4 HGET partDTopN top-N
     # the output for example above should be:
     # "blue, red, green"
 
