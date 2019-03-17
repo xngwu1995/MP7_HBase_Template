@@ -38,7 +38,7 @@ We are going to use `Storm V1.2.2`, `Redis 5.0.3` and `Open JDK 8`.
 
     git clone https://github.com/UIUC-CS498-Cloud/MP4_java_template MP4
     cd MP4
-    docker run -it -v "$(pwd)":/mp4/solution mp4_docker /bin/bash
+    docker run -it -v "$(pwd)":/mp4/solution mp4_docker
 
 Now, the MP4 template folder has been mapped to `/mp4/solution` in the container.
 
@@ -88,7 +88,7 @@ The necessary knowledge has already been covered in the Tutorial.
 
 For the splitter, we split the sentences at any characters other than numbers or letters (`[^a-zA-Z0-9]`).
 
-To save the output to redis, you should save field-value pairs ({word}, {count}) in hashes `partAWordCount`.
+To save the output to redis, you should save field-value pairs `({word}, {count})` in hashes `partAWordCount`.
 We've provided you the template in `src/main/java/edu/illinois/storm/WordCountStoreMapper.java`.
 To make it clear, in the auto-grader, we retrieve your answer from Redis by executing script equivalent to:
 
@@ -150,16 +150,20 @@ We suggest you think about how you can debug your solution efficiently and maybe
 
 # Exercise C: Normalizer Bolt
 
-The application we developed in Exercise B counts the words “Apple” and “apple” as two different words. However, if we want to find the top N words, we have to count these words the same. Additionally, we don’t want to take common English words into consideration.
+The application we developed in Exercise B counts the words “Apple” and “apple” as two different words.
+However, if we want to find the top N words, we have to count these words the same.
+Additionally, we don’t want to take common English words into consideration.
 
-Therefore, in this part, we are going to normalize the words by adding a normalizer bolt that gets the words from the splitter, normalizes them, and then sends them to the counter bolt. The responsibility of the normalizer is to:
+Therefore, in this part, we are going to normalize the words by adding a normalizer bolt that gets the words from the splitter, normalizes them, and then sends them to the counter bolt.
+The responsibility of the normalizer is to:
 
 1. Make all input words lowercase.
 2. Remove common English words.
 
 To make the implementation easier, we have provided a boilerplate for the normalizer bolt in the following file: `src/main/java/edu/illinois/storm/NormalizerBolt.java`.
 
-There is a list of common words to filter in this class, so please make sure you use this exact list to in order to receive the maximum points for this part. After finishing the implementation of this class, you have to wire up the topology with this bolt added to the topology.
+There is a list of common words to filter in this class, so please make sure you use this exact list to in order to receive the maximum points for this part.
+After finishing the implementation of this class, you have to wire up the topology with this bolt added to the topology.
 
 You need to implement all components and to wire up these components.
 To make the implementation easier, we have provided boilerplates.
@@ -202,6 +206,10 @@ You need to implement all components and to wire up these components.
 To make the implementation easier, we have provided boilerplates.
 
 Note that, when auto-graded, this topology will run for 10 seconds and automatically gets killed after that.
+For this part, different algorithm will have huge different performance.
+10s is not a strict restriction, but your solution may failed to finish within 10s on Coursera even though it works on your local environment.
+We suggest you to refine your algorithm to make it more efficient if you failed in this part while you get correct answer locally.
+Algorithm with time complexity of `O(nN)` seems to be save to pass where n is the number of total words and N is the amount of top words you need track.
 
 You can build and run the application using the command below inside the container:
 
