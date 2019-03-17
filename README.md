@@ -35,7 +35,7 @@ We are going to use `Storm V1.2.2`, `Redis 5.0.3`, `Python 2.7` and `Open JDK 8`
 
 ## Procedures
 
-**Step 3**: Download the Java templates and change the current folder, run:
+**Step 3**: Download the Python templates and change the current folder, run:
 
     git clone https://github.com/UIUC-CS498-Cloud/MP4_python_template MP4
     cd MP4
