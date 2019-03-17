@@ -143,7 +143,7 @@ You can build and run the application using the command below inside the contain
 
 Note that you'll need to set the path of the input file in `part_b_topology.yaml` and then put the input file in the right place.
 We've covered how to pass configuration to spout. You can think about how you can set the input file path in `part_b_topology.yaml`.
-We will put the input data at `/tmp/mp4_data.txt` in the auto-grader. You should modify your path accordingly before pack your solution.
+We will put the input data at `/tmp/data.txt` in the auto-grader. You should modify your path accordingly before pack your solution.
 
 If your solution is right, you should see the corresponding result in Redis.
 We suggest you think about how you can debug your solution efficiently and maybe develop some simple tools to help you build some tests.
