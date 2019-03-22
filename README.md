@@ -86,7 +86,7 @@ This first exercise is similar to **Tutorial 4: Introduction to Storm**.
 In this exercise, we are going to use the `RandomSentenceSpout` class as the spout, the `SplitSentenceBolt` class to split sentences into words, `WordCountBolt` class to count the words and RedisStoreBolt to save the output in Redis.
 The necessary knowledge has already been covered in the Tutorial.
 
-For the splitter, we split the sentences at any characters other than numbers or letters (`[^a-zA-Z0-9]`).
+For the splitter, we split the sentences at any characters other than numbers or letters (`[^a-zA-Z0-9-]`).
 
 To save the output to redis, you should save field-value pairs `({word}, {count})` in hashes `partAWordCount`.
 We've provided you the template in `src/main/java/edu/illinois/storm/WordCountStoreMapper.java`.
