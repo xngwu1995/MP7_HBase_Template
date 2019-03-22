@@ -101,14 +101,14 @@ You need to implement all components and to wire up these components.
 To make the implementation easier, we have provided boilerplates.
 Keep in mind that the most important task for this part is to master how to set up a storm application.
 
-Note that, when auto-graded, this topology will run for 10 seconds and automatically gets killed after that.
+Note that, when auto-graded, this topology will run for 15 seconds and automatically gets killed after that.
 
 You can build and run the application using the command below inside the container:
 
     # The template folder will be map to /mp4/solution in the container if you follow our instruction correctly
     cd /mp4/solution
     mvn clean package
-    storm jar ./target/storm-example-0.0.1-SNAPSHOT.jar org.apache.storm.flux.Flux --local -R /part_a_topology.yaml -s 10000
+    storm jar ./target/storm-example-0.0.1-SNAPSHOT.jar org.apache.storm.flux.Flux --local -R /part_a_topology.yaml -s 15000
 
 If your solution is right, you should see the corresponding result in Redis.
 We suggest you think about how you can debug your solution efficiently.
@@ -129,7 +129,7 @@ To make the implementation easier, we have provided a boilerplate for the topolo
 You need to implement all components and to wire up these components.
 To make the implementation easier, we have provided boilerplates.
 
-Note that, when auto-graded, this topology will run for 10 seconds and automatically gets killed after that.
+Note that, when auto-graded, this topology will run for 15 seconds and automatically gets killed after that.
 
 **NOTE**: You probably want to set the number of executors of the spout to “1” so that you don’t read the input file more than once.
 However, you have the freedom to have a different implementation as long as the result is correct.
@@ -139,7 +139,7 @@ You can build and run the application using the command below inside the contain
     # The template folder will be map to /mp4/solution in the container if you follow our instruction correctly
     cd /mp4/solution
     mvn clean package
-    storm jar ./target/storm-example-0.0.1-SNAPSHOT.jar org.apache.storm.flux.Flux --local -R /part_b_topology.yaml -s 10000
+    storm jar ./target/storm-example-0.0.1-SNAPSHOT.jar org.apache.storm.flux.Flux --local -R /part_b_topology.yaml -s 15000
 
 Note that you'll need to set the path of the input file in `part_b_topology.yaml` and then put the input file in the right place.
 We've covered how to pass configuration to spout. You can think about how you can set the input file path in `part_b_topology.yaml`.
@@ -168,14 +168,14 @@ After finishing the implementation of this class, you have to wire up the topolo
 You need to implement all components and to wire up these components.
 To make the implementation easier, we have provided boilerplates.
 
-Note that, when auto-graded, this topology will run for 10 seconds and automatically gets killed after that.
+Note that, when auto-graded, this topology will run for 15 seconds and automatically gets killed after that.
 
 You can build and run the application using the command below inside the container:
 
     # The template folder will be map to /mp4/solution in the container if you follow our instruction correctly
     cd /mp4/solution
     mvn clean package
-    storm jar ./target/storm-example-0.0.1-SNAPSHOT.jar org.apache.storm.flux.Flux --local -R /part_c_topology.yaml -s 10000
+    storm jar ./target/storm-example-0.0.1-SNAPSHOT.jar org.apache.storm.flux.Flux --local -R /part_c_topology.yaml -s 15000
 
 If your solution is right, you should see the corresponding result in Redis.
 We suggest you think about how you can debug your solution efficiently and maybe develop some simple tools to help you build some tests.
@@ -205,9 +205,9 @@ After finishing the implementation of this class, you have to wire up the topolo
 You need to implement all components and to wire up these components.
 To make the implementation easier, we have provided boilerplates.
 
-Note that, when auto-graded, this topology will run for 10 seconds and automatically gets killed after that.
+Note that, when auto-graded, this topology will run for 15 seconds and automatically gets killed after that.
 For this part, different algorithm will have huge different performance.
-10s is not a strict restriction, but your solution may failed to finish within 10s on Coursera even though it works on your local environment.
+15s is not a strict restriction, but your solution may failed to finish within 15s on Coursera even though it works on your local environment.
 We suggest you to refine your algorithm to make it more efficient if you failed in this part while you get correct answer locally.
 Algorithm with time complexity of `O(nN)` seems to be save to pass where n is the number of total words and N is the amount of top words you need track.
 
@@ -216,7 +216,7 @@ You can build and run the application using the command below inside the contain
     # The template folder will be map to /mp4/solution in the container if you follow our instruction correctly
     cd /mp4/solution
     mvn clean package
-    storm jar ./target/storm-example-0.0.1-SNAPSHOT.jar org.apache.storm.flux.Flux --local -R /part_d_topology.yaml -s 10000
+    storm jar ./target/storm-example-0.0.1-SNAPSHOT.jar org.apache.storm.flux.Flux --local -R /part_d_topology.yaml -s 15000
 
 If your solution is right, you should see the corresponding result in Redis.
 We suggest you think about how you can debug your solution efficiently and maybe develop some simple tools to help you build some tests.
