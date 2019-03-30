@@ -65,6 +65,7 @@ bolts:
 
   # TODO
   # Task: initialize RedisStoreBolt using poolConfig and storeMapper
+  # ClassName is "org.apache.storm.redis.bolt.RedisStoreBolt"
 
 # stream definitions
 # stream definitions define connections between spouts and bolts.
