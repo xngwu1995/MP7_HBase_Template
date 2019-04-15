@@ -14,7 +14,7 @@ class SplitBolt(storm.BasicBolt):
     def process(self, tup):
         # TODO
         # Task: split sentence and emit words
-        # Hint: split on "[^a-zA-Z0-9]"
+        # Hint: split on "[^a-zA-Z0-9-]"
         pass
         # End
 
