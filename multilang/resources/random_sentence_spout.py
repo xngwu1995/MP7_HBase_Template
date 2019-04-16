@@ -24,6 +24,7 @@ class SentenceSpout(storm.Spout):
         time.sleep(0.2)
         # TODO
         # Task: randomly generate sentence from sentences string array
+        # Note: only generate one sentence in this function
         pass
         # End
 
