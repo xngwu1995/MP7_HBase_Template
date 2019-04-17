@@ -29,8 +29,8 @@ config:
     # set it to false before submitting
     topology.debug: false
     # Hint: you can set input file path here
-    # make sure it's "/grader/MP4Grader/data.txt" in your final submission
-    mp4.datafile: "/grader/MP4Grader/data.txt"
+    # make sure it's "/tmp/data.txt" in your final submission
+    mp4.datafile: "/tmp/data.txt"
 
 components:
   - id: "poolConfig"
