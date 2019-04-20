@@ -55,7 +55,6 @@ The zip file structure should look like:
       Length      Date    Time    Name
     ---------  ---------- -----   ----
             0  03-13-2019 17:31   MP4/
-        75314  03-13-2019 17:31   MP4/dump.rdb
          4412  03-13-2019 17:31   MP4/pom.xml
            19  03-13-2019 17:31   MP4/README.md
          4505  03-13-2019 17:31   MP4/dependency-reduced-pom.xml
