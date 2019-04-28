@@ -42,7 +42,7 @@ components:
   # TODO
   # Task: implement the redis store mapper
   # src/main/java/edu/illinois/storm/WordCountStoreMapper.java
-  # redis hash key for part b is "partAWordCount"
+  # redis hash key for part A is "partAWordCount"
 
 # spout definitions
 spouts:
