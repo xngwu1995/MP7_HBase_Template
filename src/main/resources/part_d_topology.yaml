@@ -47,7 +47,7 @@ components:
   # TODO
   # Task: implement the redis store mapper
   # src/main/java/edu/illinois/storm/TopNStoreMapper.java
-  # redis hash key for part d is "partDTopN"
+  # redis hash key for part D is "partDTopN"
 
 # spout definitions
 spouts:
