@@ -44,7 +44,7 @@ components:
       - "uiuc_cs498_mp4"
       - 0
 
-  # Hint: redis hash key for part b is "partCWordCount"
+  # Hint: redis hash key for part C is "partCWordCount"
 
 # spout definitions
 spouts:
