@@ -41,7 +41,7 @@ components:
       - "localhost"
       - 6379
       - 2000
-      - "uiuc_cs498_mp4"
+      - "uiuc_cs498_mp6"
       - 0
 
   # TODO
@@ -51,12 +51,15 @@ components:
 
 # spout definitions
 spouts:
+  # Hint: the new file reading spout you need implement in this part is
+  # src/main/java/edu/illinois/storm/FileReaderSpout.java
+  # You need to pass file name here using <withInputFileProperties> function
 
 # bolt definitions
 bolts:
   # Hint: the new top N tracking bolt you need implement in this part is
   # src/main/java/edu/illinois/storm/TopNFinderBolt.java
-  # You need to pass N to the bolt here
+  # You need to pass N to the bolt here using <withNProperties> function
   # make sure it's 10 in your final submission
 
 

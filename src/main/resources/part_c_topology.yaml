@@ -41,13 +41,16 @@ components:
       - "localhost"
       - 6379
       - 2000
-      - "uiuc_cs498_mp4"
+      - "uiuc_cs498_mp6"
       - 0
 
   # Hint: redis hash key for part C is "partCWordCount"
 
 # spout definitions
 spouts:
+  # Hint: the new file reading spout you need implement in this part is
+  # src/main/java/edu/illinois/storm/FileReaderSpout.java
+  # You need to pass file name here using <withInputFileProperties> function
 
 # bolt definitions
 bolts:
