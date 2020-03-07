@@ -30,7 +30,6 @@ config:
     topology.debug: false
     # Hint: you can set input file path here
     # make sure it's "/tmp/data.txt" in your final submission
-    mp4.datafile: "/tmp/data.txt"
 
 components:
   - id: "poolConfig"
@@ -39,7 +38,7 @@ components:
       - "localhost"
       - 6379
       - 2000
-      - "uiuc_cs498_mp4"
+      - "uiuc_cs498_mp6"
       - 0
 
   # TODO
