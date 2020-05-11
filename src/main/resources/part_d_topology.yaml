@@ -44,7 +44,7 @@ components:
       - "localhost"
       - 6379
       - 2000
-      - "uiuc_cs498_mp6"
+      - "uiuc_cs498_mp7"
       - 0
 
   # TODO
