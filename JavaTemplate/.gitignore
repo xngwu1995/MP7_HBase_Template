@@ -1,5 +1,0 @@
-*.tar.gz
-*.tar
-.DS_Store
-
-target/
