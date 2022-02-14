@@ -41,19 +41,49 @@ ENV PATH="/usr/local/hadoop/bin:${PATH}"
 RUN sed -i "/^export JAVA_HOME/ s:.*:export JAVA_HOME=$JAVA_HOME\nexport HADOOP_PREFIX=/usr/local/hadoop\nexport HADOOP_HOME=/usr/local/hadoop\n:" $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
 RUN sed -i '/^export HADOOP_CONF_DIR/ s:.*:export HADOOP_CONF_DIR=/usr/local/hadoop/etc/hadoop/:' $HADOOP_PREFIX/etc/hadoop/hadoop-env.sh
 
+RUN \
+  apt-get update && \
+  apt-get install -y --no-install-recommends net-tools vim sudo expect ssh openssh-server zip unzip wget openjdk-8-jdk python python-pip python-setuptools gcc python-dev && \
+  apt-get autoremove -qq -y --purge && \
+  apt-get clean && \
+  rm -rf /var/cache/apt /var/lib/apt/lists && \
+  cd /usr/local/ && \
+  wget "https://archive.apache.org/dist/zookeeper/zookeeper-3.4.13/zookeeper-3.4.13.tar.gz" &&\
+  tar -xvf zookeeper-3.4.13.tar.gz && \
+  ln -s ./zookeeper-3.4.13 zookeeper &&  \
+  rm -rf /usr/local/zookeeper-3.4.13.tar.gz && \
+  mkdir /usr/local/zookeeper/data && \
+  mkdir /usr/local/zookeeper/log && \
+  rm -rf /usr/local/zookeeper/docs && \
+  bash -c "echo '1' >> /usr/local/zookeeper/data/myid" && \
+  chmod a+rwx -R /usr/local/zookeeper/ && \
+  wget "https://archive.apache.org/dist/hbase/1.6.0/hbase-1.6.0-bin.tar.gz" && \
+  tar -xzf hbase-1.6.0-bin.tar.gz && \
+  rm -rf /usr/local/hbase-1.6.0-bin.tar.gz && \
+  mv /usr/local/hbase-1.6.0* /usr/local/hbase && \
+  rm -rf /usr/local/hbase/docs && \
+  chmod a+rwx -R /usr/local/hbase/ && \
+  pip install wheel happybase && \
+  cd /usr/local/ && \
+  wget "https://archive.apache.org/dist/phoenix/phoenix-4.16.1/phoenix-hbase-1.6-4.16.1-bin.tar.gz" && \
+  tar -xzf phoenix-hbase-1.6-4.16.1-bin.tar.gz && \
+  rm -rf /usr/local/phoenix-hbase-1.6-4.16.1-bin.tar.gz && \
+  mv /usr/local/phoenix-hbase-1.6-4.16.1* /usr/local/phoenix && \
+  rm -rf /usr/local/phoenix/docs && \
+  chmod a+rwx -R /usr/local/phoenix/ && \
+  cp /usr/local/phoenix/phoenix-server-hbase-1.6-4.16.1.jar /usr/local/hbase/lib/
 
-RUN chmod a+rwx -R /usr/local/hadoop/
-COPY autosu /usr/local/bin
-RUN chmod 777 /usr/local/bin/autosu
+ENV CLASSPATH=$CLASSPATH:/usr/local/phoenix/phoenix-client-hbase-1.6-4.16.1.jar
+
+COPY zoo.cfg /usr/local/zookeeper/conf/zoo.cfg
+COPY hbase-site.xml /usr/local/hbase/conf/hbase-site.xml
+COPY hbase-env.sh /usr/local/hbase/conf/hbase-env.sh
+
+COPY auto* /usr/local/bin/
+RUN chmod 777 /usr/local/bin/auto*
 RUN adduser hadoopuser --disabled-password --gecos ""
-RUN echo 'hadoopuser:hadooppass' | chpasswd
-
-# Download and setup HBase
-RUN curl -s "http://archive.apache.org/dist/hbase/1.4.2/hbase-1.4.2-bin.tar.gz" | tar -xz -C /usr/local/
-RUN cd /usr/local && ln -s ./hbase-1.4.2 hbase
-#COPY hbase-1.4.2-bin.tar.gz /usr/local/
-#RUN cd /usr/local/ && tar xzf hbase-1.4.2-bin.tar.gz && ln -s ./hbase-1.4.2 hbase
-
+RUN echo 'hadoopuser:hadooppass' | chpasswd && usermod -aG sudo hadoopuser
+RUN sh -c "echo 'hadoopuser ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
 
 ENV HBASE_HOME /usr/local/hbase
 ENV PATH="/usr/local/hbase/bin:${PATH}"
@@ -63,4 +93,3 @@ RUN chmod a+rwx -R /usr/local/hbase/
 # Make vim nice
 RUN echo "set background=dark" >> ~/.vimrc
 
-#COPY MP3/ /MP3/
