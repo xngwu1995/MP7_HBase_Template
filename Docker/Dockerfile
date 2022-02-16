@@ -53,6 +53,7 @@ RUN sh -c "echo 'hadoopuser ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers"
 
 ENV HBASE_HOME /usr/local/hbase
 ENV PATH="/usr/local/hbase/bin:${PATH}"
+ENV PATH="/usr/local/zookeeper/bin:${PATH}"
 RUN chmod a+rwx -R /usr/local/hbase/
 
 
